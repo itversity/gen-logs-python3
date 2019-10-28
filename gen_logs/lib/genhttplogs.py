@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 from datetime import datetime
 import json
@@ -17,7 +17,7 @@ class IPGenerator:
     def get_ip(self):
         self.session_gc()
         self.session_create()
-        ip = list(self.sessions.keys())[random.randrange(len(self.sessions))]
+        ip = list(self.sessions)[random.randrange(len(self.sessions))]
         self.sessions[ip] = self.sessions[ip] + 1
         return ip
 
@@ -26,7 +26,7 @@ class IPGenerator:
             self.sessions[self.random_ip()] = 0
 
     def session_gc(self):
-        for (ip, count) in self.sessions.items():
+        for (ip, count) in list(self.sessions.items()):
             if count >= self.session_length:
                 del self.sessions[ip]
 
